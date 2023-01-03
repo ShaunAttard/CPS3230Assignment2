@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
+	<classpathentry kind="con" path="org.eclipse.ajdt.core.ASPECTJRT_CONTAINER"/>
+	<classpathentry kind="lib" path="D:/UNI/Year 3 Semester 1/Software Testing/Part 2/selenium-server-4.7.2.jar"/>
+	<classpathentry kind="lib" path="D:/UNI/Year 3 Semester 1/Software Testing/Part 2/json-20220924.jar"/>
+	<classpathentry kind="lib" path="D:/UNI/Year 3 Semester 1/Software Testing/Part 2/httpclient-4.5.14.jar"/>
+	<classpathentry kind="lib" path="D:/UNI/Year 3 Semester 1/Software Testing/Part 2/httpcore-4.4.16.jar"/>
+	<classpathentry kind="lib" path="D:/UNI/Year 3 Semester 1/Software Testing/Part 2/commons-codec-1.11.jar"/>
+	<classpathentry kind="lib" path="D:/UNI/Year 3 Semester 1/Software Testing/Part 2/commons-logging-1.2.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

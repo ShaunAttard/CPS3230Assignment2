@@ -1,0 +1,26 @@
+States:
+- login (starting State)
+- viewAlerts
+- upload
+- invalidAlert
+- checkLimit
+- delete
+- invalidDelete
+- alertLimit
+
+Variables:
+
+Transitions:
+- login -> viewAlerts \ Login \
+- viewAlerts -> login \ Logout \
+- viewAlerts -> upload \ Upload \
+- upload -> checkLimit \ CheckLimit \
+- viewAlerts -> invalidAlert \ UploadInvalid
+- checkLimit -> viewAlerts \ ViewAlerts \
+- viewAlerts -> delete \ Delete \
+- delete -> viewAlerts \ ViewAlerts \
+- viewAlerts -> invalidDelete \ DeleteInvalid \
+- invalidAlert -> viewAlerts \ Login \
+- invalidDelete -> viewAlerts \ Login \
+- upload -> alertLimit \ CheckLimitInvalid \
+- alertLimit -> viewAlerts \ Login \

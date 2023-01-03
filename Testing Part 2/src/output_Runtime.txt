@@ -1,0 +1,64 @@
+[RuntimeVerification]AUTOMATON::> RuntimeVerification() STATE::>loginPage
+Invalid Credentials
+[RuntimeVerification]MOVED ON METHODCALL: void main.APIRuntimeVerification.LoginInvalid() TO STATE::> loginPage
+[RuntimeVerification]AUTOMATON::> RuntimeVerification() STATE::>loginPage
+Logged in
+[RuntimeVerification]MOVED ON METHODCALL: void main.APIRuntimeVerification.Login() TO STATE::> alertsPage
+[RuntimeVerification]AUTOMATON::> RuntimeVerification() STATE::>alertsPage
+Alert uploaded!
+[RuntimeVerification]MOVED ON METHODCALL: int main.APIRuntimeVerification.Upload() TO STATE::> uploadAlert
+[RuntimeVerification]AUTOMATON::> RuntimeVerification() STATE::>uploadAlert
+Alert was Valid, Checking Alert Limit...
+[RuntimeVerification]MOVED ON METHODCALL: boolean main.APIRuntimeVerification.CheckLimit() TO STATE::> checkAlertLimit
+[RuntimeVerification]AUTOMATON::> RuntimeVerification() STATE::>checkAlertLimit
+Alert Limit not exceeded, Redirecting to Alerts Page...
+[RuntimeVerification]MOVED ON METHODCALL: void main.APIRuntimeVerification.ViewAlerts() TO STATE::> alertsPage
+[RuntimeVerification]AUTOMATON::> RuntimeVerification() STATE::>alertsPage
+Alert uploaded!
+[RuntimeVerification]MOVED ON METHODCALL: int main.APIRuntimeVerification.UploadInvalid() TO STATE::> uploadAlert
+[RuntimeVerification]AUTOMATON::> RuntimeVerification() STATE::>uploadAlert
+Alert was Invalid, Redirecting to Bad State...
+[RuntimeVerification]MOVED ON METHODCALL: boolean main.APIRuntimeVerification.CheckLimit() TO STATE::> !!!SYSTEM REACHED BAD STATE!!! invalidAlert 
+aspects._asp_Runtime0.ajc$before$aspects__asp_Runtime0$5$63936bae(_asp_Runtime0.aj:63)
+main.APIRuntimeVerification.UploadInvalid(APIRuntimeVerification.java:138)
+main.Runner.main(Runner.java:17) 
+[RuntimeVerification]AUTOMATON::> RuntimeVerification() STATE::>invalidAlert
+[RuntimeVerification]AUTOMATON::> RuntimeVerification() STATE::>invalidAlert
+Recovering from Bad State...
+[RuntimeVerification]MOVED ON METHODCALL: void main.APIRuntimeVerification.Login() TO STATE::> alertsPage
+[RuntimeVerification]AUTOMATON::> RuntimeVerification() STATE::>alertsPage
+Alert uploaded!
+[RuntimeVerification]MOVED ON METHODCALL: int main.APIRuntimeVerification.UploadCheckInvalid() TO STATE::> uploadAlert
+[RuntimeVerification]AUTOMATON::> RuntimeVerification() STATE::>uploadAlert
+Alert was Valid, Checking Alert Limit...
+[RuntimeVerification]MOVED ON METHODCALL: boolean main.APIRuntimeVerification.CheckLimitInvalid() TO STATE::> checkAlertLimit
+[RuntimeVerification]AUTOMATON::> RuntimeVerification() STATE::>checkAlertLimit
+Alert Limit exceeded, Redirecting to Bad State...
+[RuntimeVerification]MOVED ON METHODCALL: void main.APIRuntimeVerification.ViewAlerts() TO STATE::> !!!SYSTEM REACHED BAD STATE!!! alertLimit 
+aspects._asp_Runtime0.ajc$before$aspects__asp_Runtime0$4$a2ec1c5(_asp_Runtime0.aj:54)
+main.APIRuntimeVerification.UploadCheckInvalid(APIRuntimeVerification.java:180)
+main.Runner.main(Runner.java:20) 
+[RuntimeVerification]AUTOMATON::> RuntimeVerification() STATE::>alertLimit
+Recovering from Bad State...
+[RuntimeVerification]MOVED ON METHODCALL: void main.APIRuntimeVerification.Login() TO STATE::> alertsPage
+[RuntimeVerification]AUTOMATON::> RuntimeVerification() STATE::>alertsPage
+Delete Request Sent
+[RuntimeVerification]MOVED ON METHODCALL: int main.APIRuntimeVerification.Delete() TO STATE::> deleteAlert
+[RuntimeVerification]AUTOMATON::> RuntimeVerification() STATE::>deleteAlert
+Delete Successful, Redirecting to Alerts Page...
+[RuntimeVerification]MOVED ON METHODCALL: void main.APIRuntimeVerification.ViewAlerts() TO STATE::> alertsPage
+[RuntimeVerification]AUTOMATON::> RuntimeVerification() STATE::>alertsPage
+Delete Request Sent
+[RuntimeVerification]MOVED ON METHODCALL: int main.APIRuntimeVerification.DeleteInvalid() TO STATE::> deleteAlert
+[RuntimeVerification]AUTOMATON::> RuntimeVerification() STATE::>deleteAlert
+Delete Failed, Redirecting to Bad State...
+[RuntimeVerification]MOVED ON METHODCALL: void main.APIRuntimeVerification.ViewAlerts() TO STATE::> !!!SYSTEM REACHED BAD STATE!!! invalidDelete 
+aspects._asp_Runtime0.ajc$before$aspects__asp_Runtime0$4$a2ec1c5(_asp_Runtime0.aj:54)
+main.APIRuntimeVerification.DeleteInvalid(APIRuntimeVerification.java:259)
+main.Runner.main(Runner.java:24) 
+[RuntimeVerification]AUTOMATON::> RuntimeVerification() STATE::>invalidDelete
+Recovering from Bad State...
+[RuntimeVerification]MOVED ON METHODCALL: void main.APIRuntimeVerification.Login() TO STATE::> alertsPage
+[RuntimeVerification]AUTOMATON::> RuntimeVerification() STATE::>alertsPage
+Logged out of the System
+[RuntimeVerification]MOVED ON METHODCALL: void main.APIRuntimeVerification.Logout() TO STATE::> loginPage

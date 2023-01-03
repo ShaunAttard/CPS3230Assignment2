@@ -1,0 +1,149 @@
+
+IMPORTS{
+	import org.json.JSONObject;
+	import java.util.List;
+	import org.json.JSONArray;
+	import org.openqa.selenium.By;
+	import org.openqa.selenium.Keys;
+	import org.openqa.selenium.WebElement;
+	import org.openqa.selenium.chrome.ChromeDriver;
+	import org.apache.http.client.methods.HttpGet;
+	import org.apache.http.entity.StringEntity;
+	import org.apache.http.impl.client.CloseableHttpClient;
+	import org.apache.http.impl.client.HttpClientBuilder;
+	import org.apache.http.util.EntityUtils;
+	import org.apache.http.HttpResponse;
+	import org.apache.http.HttpEntity;
+}
+
+GLOBAL {
+	VARIABLES {
+		int code;
+		int del;
+		boolean alerts;
+		int event;
+	}
+	
+	EVENTS{
+		LoginInvalid() = {*.LoginInvalid()}
+		Login() = {*.Login()}
+		Upload() = {*.Upload()}
+		UploadInvalid() = {*.UploadInvalid()}
+		UploadCheckInvalid() = {*.UploadCheckInvalid()}
+		Delete() = {*.Delete()}
+		DeleteInvalid() = {*.DeleteInvalid()}
+		ViewAlerts() = {*.ViewAlerts()}
+		CheckLimit() = {*.CheckLimit()}
+		CheckLimitInvalid() = {*.CheckLimitInvalid()}
+		HandleBadState() = {*.HandleBadState()}
+		Logout() = {*.Logout()}
+	}
+	
+	PROPERTY RuntimeVerification{
+		STATES{
+			BAD{
+				invalidAlert
+				invalidDelete
+				alertLimit
+			}
+			NORMAL{
+				alertsPage
+				uploadAlert
+				checkAlertLimit
+				deleteAlert
+			}
+			STARTING{
+				loginPage
+			}
+		}
+		
+		TRANSITIONS{
+			loginPage -> loginPage [LoginInvalid\\System.out.println("Invalid Credentials");]
+			loginPage -> alertsPage [Login\\System.out.println("Logged in");]
+			alertsPage -> uploadAlert [Upload\\code = uploadValid(); System.out.println("Alert uploaded!");]
+			alertsPage -> uploadAlert [UploadInvalid\\code = uploadInvalid(); System.out.println("Alert uploaded!");]
+			alertsPage -> uploadAlert [UploadCheckInvalid\\code = uploadValid(); System.out.println("Alert uploaded!");]
+			uploadAlert -> checkAlertLimit [CheckLimit\code == 201\alerts = checkLimit(); System.out.println("Alert was Valid, Checking Alert Limit...");]
+			uploadAlert -> checkAlertLimit [CheckLimitInvalid\code == 201\alerts = checkLimitInvalid(); System.out.println("Alert was Valid, Checking Alert Limit...");]
+			uploadAlert -> invalidAlert [CheckLimit\code != 201\System.out.println("Alert was Invalid, Redirecting to Bad State...");]
+			invalidAlert -> alertsPage [Login\\System.out.println("Recovering from Bad State...");]
+			checkAlertLimit -> alertsPage [ViewAlerts\alerts == true\System.out.println("Alert Limit not exceeded, Redirecting to Alerts Page...");]
+			checkAlertLimit -> alertLimit [ViewAlerts\alerts == false\System.out.println("Alert Limit exceeded, Redirecting to Bad State...");]
+			alertLimit -> alertsPage [Login\\System.out.println("Recovering from Bad State...");]
+			alertsPage -> deleteAlert [Delete\\del = deleteValid(); System.out.println("Delete Request Sent");]
+			alertsPage -> deleteAlert [DeleteInvalid\\del = deleteInvalid(); System.out.println("Delete Request Sent");]
+			deleteAlert -> alertsPage [ViewAlerts\del==200\System.out.println("Delete Successful, Redirecting to Alerts Page...");]
+			deleteAlert -> invalidDelete [ViewAlerts\del==400\System.out.println("Delete Failed, Redirecting to Bad State...");]
+			invalidDelete -> alertsPage [Login\\System.out.println("Recovering from Bad State...");]
+			alertsPage -> loginPage [Logout\\System.out.println("Logged out of the System");]
+		}
+	}
+}
+
+METHODS {
+		int uploadValid(){
+			JSONObject json = new JSONObject();
+			
+			json.put("userId","1460686c-0cda-452c-b8f7-7ca99211bf07");
+			json.put("alertType", 6);
+	        json.put("heading", "Jumper Windows 11 Laptop");
+	        json.put("description", "Jumper Windows 11 Laptop 1080P Display,12GB RAM 256GB SSD");
+	        json.put("url", "https://www.amazon.co.uk/Windows-Display-Ultrabook-Processor-Bluetooth");
+	        json.put("imageUrl", "https://m.media-amazon.com/images/I/712Xf2LtbJL._AC_SX679_.jpg");
+	        json.put("postedBy", "1460686c-0cda-452c-b8f7-7ca99211bf07");
+	        json.put("priceInCents", 24999);
+	        
+	        int code = 201;
+	        return code;
+		}
+		
+		int uploadInvalid(){
+			JSONObject json = new JSONObject();
+			String temp = "noone";
+			
+			json.put("userId","1460686c-0cda-452c-b8f7-7ca99211bf07");
+			json.put("alertType", 8);
+	        json.put("heading", "Jumper Windows 11 Laptop");
+	        json.put("description", "Jumper Windows 11 Laptop 1080P Display,12GB RAM 256GB SSD");
+	        json.put("url", "https://www.amazon.co.uk/Windows-Display-Ultrabook-Processor-Bluetooth");
+	        json.put("imageUrl", "https://m.media-amazon.com/images/I/712Xf2LtbJL._AC_SX679_.jpg");
+	        json.put("postedBy", temp);
+	        json.put("priceInCents", 24999);
+	        
+	        int code = 400;
+	        return code;
+		}
+		
+		int deleteValid(){
+			int code = 200;
+			return code;
+		}
+		
+		int deleteInvalid(){
+			int code = 400;
+			return code;
+		}
+		
+		boolean checkLimit(){
+			ChromeDriver driver = new ChromeDriver();
+			driver.get("https://www.marketalertum.com/Alerts/Login");
+			driver.findElement(By.id("UserId")).sendKeys("1460686c-0cda-452c-b8f7-7ca99211bf07");
+	        driver.switchTo().activeElement().sendKeys(Keys.ENTER);
+	        List<WebElement> alerts = driver.findElements(By.xpath("//table[@border='1']"));
+	        System.out.println("Size: "+alerts.size());
+	        boolean limit;
+	        if(alerts.size()>5){
+	        	limit = false;
+	        } else {
+	        	limit = true;
+	        }
+	        driver.quit();
+	        return limit;
+		}
+		
+		boolean checkLimitInvalid(){
+			boolean limit = false;
+	        return limit;
+		}
+		
+}
